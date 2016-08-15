@@ -1,11 +1,18 @@
 <!DOCTYPE html>
 <html lang="en-US">
-    <head>
-        <title>Pi Shade Controller</title>
-        <meta charset="utf-8">
-    </head>
 
-    <body style="background-color:bisque"> <!-- BISQUE‽!? -->
-        <p>Temporary words</p>
-    </body>
+<head>
+    <title>Pi Shade Controller</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <p>Shade Controller</p>
+    <form action="/" method="POST">
+        <button class="manual-btn" name="Raise" type="submit">Raise</button>
+        <button class="manual-btn" name="Lower" type="submit">Lower</button>
+    </form>
+</body>
+
 </html>
