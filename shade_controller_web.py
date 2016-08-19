@@ -5,25 +5,23 @@ from flask import Flask, render_template, request
 import shade_controller_hw as hw
 
 
+MANUAL_CONTROLS = {'Raise':"up",'Lower':"down"}
+RESPONSES = {'up':"Raising",'down':"Lowering"}
+HW_RESPONSE = {'up':hw.up,'down':hw.down}
+
 app = Flask('pi-shade-controller')
 app.config['DEBUG'] = False
 
-@app.route('/', methods=['GET','POST'])
+@app.route('/')
 def index():
-    if request.method == "POST":
-        if 'Raise' in request.form:
-            print("Up")
-            hw.up()
-            pass
-        elif 'Lower' in request.form:
-            print("Down")
-            hw.down()
-            pass
-    return render_template('index.html')
+    return render_template('index.html', buttons=MANUAL_CONTROLS)
 
-
-
-
+@app.route('/<button>')
+def control(button=None):
+    response = RESPONSES[button] + " shade"
+    print(response)
+    HW_RESPONSE[button]()
+    return response, 200, {'Content-Type': 'text/plain'}
 
 
 if __name__=='__main__':

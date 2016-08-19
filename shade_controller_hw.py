@@ -8,16 +8,24 @@ except ImportError:
     import mockGPIO as gpio
 
 
+UP = 16
+DOWN = 18
+WAIT = 0.4
+
+
 gpio.setmode(gpio.BOARD)
-gpio.setup(18,gpio.OUT)
-gpio.setup(16,gpio.OUT)
+gpio.setup(UP,gpio.OUT)
+gpio.setup(DOWN,gpio.OUT)
+
 
 def up():
-    gpio.output(16,1)
-    sleep(0.3)
-    gpio.output(16,0)
+    print("HW Raise")
+    gpio.output(UP,1)
+    sleep(WAIT)
+    gpio.output(UP,0)
 
 def down():
-    gpio.output(18,1)
-    sleep(0.3)
-    gpio.output(18,0)
+    print("HW Lower")
+    gpio.output(DOWN,1)
+    sleep(WAIT)
+    gpio.output(DOWN,0)

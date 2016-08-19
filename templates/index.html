@@ -8,11 +8,38 @@
 </head>
 
 <body>
-    <p>Shade Controller</p>
-    <form action="/" method="POST">
-        <button class="manual-btn" name="Raise" type="submit">Raise</button>
-        <button class="manual-btn" name="Lower" type="submit">Lower</button>
-    </form>
-</body>
+    <h2>Shade Controller</h2>
+    <div>
+        {% for name, button in buttons.items() %}
+            <button class="manual-btn manual-btn-{{ button }}" name="{{ name }}" value="{{ button }}">
+                {{ name }}
+            </button>
+        {% endfor %}
+    </div>
+    <div class="status-text">
+        <p id="status-text"></p>
+    </div>
+    
+    <script>
+    addEventListener("DOMContentLoaded", function() {
+        var buttons = document.querySelectorAll(".manual-btn");
+        for (var i=0; i<buttons.length; i++) {
+            var button = buttons[i];
+            button.addEventListener("click", function(e) {
+                e.preventDefault();
+                var b = e.target;
+                var command = b.value;
 
+                var request = new XMLHttpRequest();
+
+                request.onload = function (){
+                    document.getElementById("status-text").innerHTML = request.responseText;
+                };
+                request.open("GET", "/" + command, true);
+                request.send();
+            });
+        }
+    }, true);  
+    </script>
+</body>
 </html>
