@@ -1,1 +1,1 @@
-# Raspberry Pi based Shade Controller
+# Raspberry Pi based shade controller

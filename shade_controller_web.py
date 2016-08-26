@@ -1,13 +1,13 @@
 # Web-facing portion of Pi Shade Controller App
 
-import os
+import signal, sys
 from flask import Flask, render_template, request
-import shade_controller_hw as hw
+import shade_controller_monitor as monitor
 
 
 MANUAL_CONTROLS = {'Raise':"up",'Lower':"down"}
 RESPONSES = {'up':"Raising",'down':"Lowering"}
-HW_RESPONSE = {'up':hw.up,'down':hw.down}
+HW_RESPONSE = {'up':monitor.manualup,'down':monitor.manualdown}
 
 app = Flask('pi-shade-controller')
 app.config['DEBUG'] = False
@@ -23,6 +23,10 @@ def control(button=None):
     HW_RESPONSE[button]()
     return response, 200, {'Content-Type': 'text/plain'}
 
+def cleanup():
+    monitor.hwcleanup()
+    sys.exit(0)
 
 if __name__=='__main__':
+    signal.signal(singal.SIGINT, cleanup)
     app.run(host='0.0.0.0') # development flag
