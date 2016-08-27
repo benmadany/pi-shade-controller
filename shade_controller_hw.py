@@ -12,8 +12,8 @@ UP = 16
 DOWN = 18
 WAIT = 0.4
 
-gpio.setmode(gpio.BOARD)
 #gpio.setwarnings(False)
+gpio.setmode(gpio.BOARD)
 gpio.setup(UP,gpio.OUT)
 gpio.setup(DOWN,gpio.OUT)
 
@@ -30,4 +30,5 @@ def down():
     gpio.output(DOWN,0)
 
 def cleanup():
+    print("HW Cleanup")
     gpio.cleanup()
